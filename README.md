@@ -8,3 +8,5 @@ Name the function
 to setup0-> setupN
 to loop0-> loopN
 changed.
+![task0.JPG](https://github.com/chrmlinux/tinyCore/blob/main/doc/task0.JPG)
+![task1.JPG](https://github.com/chrmlinux/tinyCore/blob/main/doc/task1.JPG)
