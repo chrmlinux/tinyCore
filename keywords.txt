@@ -1,0 +1,7 @@
+tinyCore 	KEYWORD1 tinyCore
+tinyCore 	KEYWORD1 tc
+loop0			KEYWORD1 tinyCore
+setup0		KEYWORD1 tinyCore
+
+begin			KEYWORD2
+end				KEYWORD2
