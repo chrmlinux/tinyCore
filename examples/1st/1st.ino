@@ -3,25 +3,25 @@ static tinyCore tc;
 
 void setup(void) {
   Serial.begin( 115200 ); while (!Serial);
-  tc.begin();
-
-  Serial.println("c1 start");
+  tc.begin(TINYCORE0);  // is tc.begin();
+  // tc.begin(TINYCORE1);
+  Serial.print("c"); Serial.print(xPortGetCoreID()); Serial.println(" start");
 }
 
 void loop(void) {
   static uint8_t i = 0;
-  Serial.print("c1 "); Serial.println(i);
+  Serial.print("c"); Serial.print(xPortGetCoreID()); Serial.print(" "); Serial.println(i);
   i++;
+  delay(1);
 }
 
-void setup0(void) {
-  Serial.println("c0 start");
-
+void setupN(void) {
+  Serial.print("c"); Serial.print(xPortGetCoreID()); Serial.println(" start");
 }
 
-void loop0(void) {
+void loopN(void) {
   static uint8_t i = 0;
-  Serial.print("c0 "); Serial.println(i);
+  Serial.print("c"); Serial.print(xPortGetCoreID()); Serial.print(" "); Serial.println(i);
   i++;
-
+  delay(1);
 }
