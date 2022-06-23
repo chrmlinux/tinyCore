@@ -12,4 +12,4 @@ changed.
 ![task1.JPG](https://github.com/chrmlinux/tinyCore/blob/main/doc/task1.JPG)
 # v0.2.1
 for Arduino
-![arduino.JPG](https://github.com/chrmlinux/tinyCore/blob/main/doc/arduino.JPG)
+![arduino.JPG](https://github.com/chrmlinux/tinyCore/blob/main/doc/Arduino.JPG)
