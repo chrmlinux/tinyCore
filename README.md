@@ -13,3 +13,6 @@ changed.
 # v0.2.1
 for Arduino
 ![arduino.JPG](https://github.com/chrmlinux/tinyCore/blob/main/doc/Arduino.JPG)
+# v0.3.0
+for Arduino
+![SPRESENSE.PNG](https://github.com/chrmlinux/tinyCore/blob/main/doc/SPRESENSE.png)

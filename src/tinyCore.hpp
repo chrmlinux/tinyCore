@@ -5,23 +5,29 @@
 //     v0.1.1 for core selected
 // update/author  : 2022/06/23 @chrmlinux03
 //     v0.2.1 for Arduino
-// license        : mit
+// update/author  : 2023/12/01 @chrmlinux03
+//     v0.3.0 for SPRESENSE
+// license        : MIT
 //=======================================================================
 
 #ifndef __TINYCORE_HPP__
 #define __TINYCORE_HPP__
-
-enum {TINYCORE0 = 0, TINYCORE1};
 
 #include <Arduino.h>
 
 //=======================================================================
 // include
 //=======================================================================
-#if defined(ARDUINO_ARCH_ESP32)
+#if defined (ARDUINO_ARCH_ESP32)
 //-------------------------------------
 // for ESP32
 //-------------------------------------
+
+#elif defined (ARDUINO_ARCH_SPRESENSE)
+//-------------------------------------
+// for SPRESENSE
+//-------------------------------------
+
 #else
 //-------------------------------------
 // for Arduino
@@ -39,12 +45,18 @@ void setupN(void);
 void loopN(void);
 static volatile bool bBehindTaskEnd = false;
 
-#if defined(ARDUINO_ARCH_ESP32)
+#if defined (ARDUINO_ARCH_ESP32)
 //-------------------------------------
 // for ESP32
 //-------------------------------------
 static TaskHandle_t pBehindTask = NULL;
-#else
+
+#elif defined (ARDUINO_ARCH_SPRESENSE)
+//-------------------------------------
+// for SPRESENSE
+//-------------------------------------
+
+#else 
 //-------------------------------------
 // for Arduino
 //-------------------------------------
@@ -53,7 +65,7 @@ static TaskHandle_t pBehindTask = NULL;
 //=======================================================================
 // another task exec
 //=======================================================================
-#if defined(ARDUINO_ARCH_ESP32)
+#if defined (ARDUINO_ARCH_ESP32)
 //-------------------------------------
 // for ESP32
 //-------------------------------------
@@ -64,6 +76,17 @@ void BehindTask(void *param) {
   }
   vTaskDelete(pBehindTask);
 }
+#elif defined (ARDUINO_ARCH_SPRESENSE)
+//-------------------------------------
+// for SPRESENSE
+//-------------------------------------
+void thread(int argc, char **argv) {
+  while (!bBehindTaskEnd) {
+    loopN();
+    yield();
+  }    
+}
+
 #else
 //-------------------------------------
 // for Arduino
@@ -76,8 +99,8 @@ void BehindTask(void *param) {
 class tinyCore {
 
   public:
-//    tinyCore();
-//    ~tinyCore();
+    tinyCore(){}
+    ~tinyCore(){}
 
     //=======================================================================
     // begin
@@ -92,11 +115,21 @@ class tinyCore {
     }
     void begin(void) {
       setupN();
-#if defined(ARDUINO_ARCH_ESP32)
+      
+#if defined (ARDUINO_ARCH_ESP32)
       //-------------------------------------
       // for ESP32
       //-------------------------------------
       xTaskCreatePinnedToCore(BehindTask, "BehindTask", 8192, NULL, 1, NULL, _core);
+
+#elif defined (ARDUINO_ARCH_SPRESENSE)
+      //-------------------------------------
+      // for SPRESENSE
+      //-------------------------------------
+      char *argv[4];
+      argv[0] = NULL;
+      task_create("task1", 121, 2028, thread, argv);
+
 #else
       //-------------------------------------
       // for Arduino
